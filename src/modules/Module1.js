@@ -9,21 +9,26 @@ class Module1 extends React.Component {
     isDone: false,
     errorMessage: null,
     img: null,
-    cancelTokenSource: null
+    cancel: null
   }
 
   sendRequest = (e) => {
     const requestType = document.querySelector('input[name=requestType]:checked').value;
-    const cancelToken = axios.CancelToken;
-    const source = cancelToken.source();
+    const CancelToken = axios.CancelToken;
+    const _this = this;
 
     this.setState({
-      isLoading: true,
-      cancelTokenSource: source
+      isLoading: true
     });
 
+
     axios.get(requestType, {
-        cancelToken: source.token
+        cancelToken: new CancelToken(function executor(c) {
+          // An executor function receives a cancel function as a parameter
+          _this.setState({
+            cancel: c
+          });
+        })
       })
       .then((response) => {
         this.setState({
@@ -58,7 +63,7 @@ class Module1 extends React.Component {
   }
 
   stopRequest = (e) => {
-    this.state.cancelTokenSource.cancel();
+    this.state.cancel();
   }
 
   refresh = (e) => {
