@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Button from '../components/button/Button';
+import Radio from '../components/radio/Radio';
 
 class Module1 extends React.Component {
   state = {
@@ -76,23 +77,13 @@ class Module1 extends React.Component {
 
   render() {
     const { isError, isLoading, isDone, img, errorMessage } = this.state;
-
+    // const { value, title, name, onChange, checked } = this.props;
     return (
       <>
         <div className="row mb-3">
           <div className="col">
-            <div className="form-check form-check-inline">
-              <label className="form-check-label">
-                <input className="form-check-input" type="radio" name="requestType" value="https://aws.random.cat/meow" defaultChecked onChange={this.refresh} />
-                Good Request
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <label className="form-check-label">
-                <input className="form-check-input" type="radio" name="requestType" value="https://sdfsdf" onChange={this.refresh} />
-                Bad Request
-              </label>
-            </div>
+            <Radio name="requestType" value="https://aws.random.cat/meow" checked={true} onChange={this.refresh} title="Good Request" />
+            <Radio name="requestType" value="https://sdfsdf" onChange={this.refresh} title="Bad Request" />
           </div>
         </div>
 
